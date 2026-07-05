@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BMI Result</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+<div class="container mt-5">
+    <div class="card p-4 shadow-lg">
+        <h2 class="text-center">Your BMI Result</h2>
+
+        <h3 class="text-center mt-3">BMI: <strong>{{ bmi }}</strong></h3>
+        <h4 class="text-center">Category: <span class="text-primary">{{ category }}</span></h4>
+
+        <div class="alert alert-info mt-4">
+            <h5>Health Tips:</h5>
+            <p>{{ tips }}</p>
+        </div>
+
+        <div class="text-center mt-3">
+            <a href="/progress" class="btn btn-secondary">Go Back</a>
+            <a href="/" class="btn btn-primary">Home</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

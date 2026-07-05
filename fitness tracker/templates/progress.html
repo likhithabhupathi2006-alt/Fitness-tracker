@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Track Progress</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="container mt-3">
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Fitness Tracker</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/add_user">Add User</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/add_workout">Add Workout</a></li>
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="/progress">Progress</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/report">Report</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-container">
+        <div class="card-form">
+            <h2 class="mb-3">Track User Progress</h2>
+            <p class="text-muted mb-3">Enter your details below to calculate BMI and receive health tips.</p>
+            <form method="POST" novalidate>
+                <div class="mb-3">
+                    <label class="form-label" for="user_id">User</label>
+                    <select id="user_id" name="user_id" class="form-control">
+                        {% for u in users %}
+                            <option value="{{ u.user_id }}">{{ u.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-row mb-3">
+                    <div class="col">
+                        <label class="form-label" for="weight">Weight (kg)</label>
+                        <input id="weight" type="number" step="0.1" name="weight" class="form-control" placeholder="e.g. 70.5">
+                    </div>
+                    <div class="col">
+                        <label class="form-label" for="height">Height (cm)</label>
+                        <input id="height" type="number" step="0.1" name="height" class="form-control" placeholder="e.g. 175">
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="date">Date</label>
+                    <input id="date" type="date" name="date" class="form-control">
+                </div>
+
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary">Add Progress</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% if bmi %}
+    <div class="container mt-4">
+        <div class="alert alert-info">
+            <h4>Your BMI: {{ bmi }} ({{ bmi_category }})</h4>
+            <p><strong>Health Tip:</strong> {{ health_tips }}</p>
+        </div>
+    </div>
+    {% endif %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
